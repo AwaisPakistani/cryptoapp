@@ -12,7 +12,7 @@ require '../vendor/autoload.php';
     
       if (isset( $_GET['admin_id'])) {
                     $id = $_GET['admin_id'];
-                    $sql_user = "SELECT id,channel_name FROM admins WHERE id='$id'";
+                    $sql_user = "SELECT id,name,channel_name FROM admins WHERE id='$id'";
                     $result_user = $conn->query($sql_user);
                     // for fetching channel name
                     $row_user = $result_user->fetch_all(MYSQLI_ASSOC);
