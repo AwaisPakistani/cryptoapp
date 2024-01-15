@@ -51,10 +51,18 @@ require '../vendor/autoload.php';
     $updated_at = date("Y-m-d h:i:sa");
     
     if (isset($_FILES["profile_picture"]["name"])) {
+        $path=$row_all[0]['profile_picture'];
+        if($path!=null){
+            if(file_exists($path)){
+                unlink($path);
+            }else{
+                echo "file does not exists<br>";
+            }
+        }
         // Image
         $filename = $_FILES["profile_picture"]["name"];
         $tempname = $_FILES["profile_picture"]["tmp_name"];  
-        $folder = "thumbnails/".$filename;  
+        $folder = "profiles/".$filename;  
         if (move_uploaded_file($tempname, $folder)) {
             $updated_at = $row_all[0]['updated_at'];
             $sql = "UPDATE users SET name='$name',email='$email',phone='$phone',address='$address',password='$password',profile_picture='$folder' WHERE id='$id'";
@@ -72,9 +80,9 @@ require '../vendor/autoload.php';
       } else {
           
           $folder=$row_all[0]['profile_picture']; 
-          $exp_filename = explode('/',$folder);
-          $file=$exp_filename[1];
-          $filename = $file;
+          // $exp_filename = explode('/',$folder);
+          // $file=$exp_filename[1];
+          // $filename = $file;
           $sql = "UPDATE users SET name='$name',email='$email',phone='$phone', password='$password',photo='$folder' WHERE id='$id'";
             
           if ($conn->query($sql) === TRUE) {

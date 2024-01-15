@@ -87,7 +87,6 @@ require '../vendor/autoload.php';
     }
     // portfolio_overview
    
-    $wallet_addresses = MT_RAND_PHP;
      
    
     if (isset($_FILES["profile_picture"]["name"])) {
@@ -122,8 +121,8 @@ require '../vendor/autoload.php';
                 // output data of each row
                 if (move_uploaded_file($tempname, $folder)) {
   
-                  $sql = "INSERT INTO users (name,email, email_verified_at,email_verified_status, password, profile_picture, phone, wallet_addresses, account_balance ,notification_preferences, linked_bank_account, portfolio_overview,verify_token, created_at, updated_at)
-                  VALUES ('$name','$email','','0', '$password', '$folder','$phone','$wallet_addresses','$account_balance','$notification_preferences','$linked_bank_account','$portfolio_overview','$verify_token','$created_at','$updated_at')";
+                  $sql = "INSERT INTO users (name,email, email_verified_at,email_verified_status, password, profile_picture, phone ,notification_preferences, portfolio_overview,verify_token, created_at, updated_at)
+                  VALUES ('$name','$email','','0', '$password', '$folder','$phone','$notification_preferences','$portfolio_overview','$verify_token','$created_at','$updated_at')";
                   
                   if ($conn->query($sql) === TRUE) {
                     echo "User created successfully";

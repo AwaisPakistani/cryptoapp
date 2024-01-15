@@ -9,7 +9,6 @@ require '../vendor/autoload.php';
   // thumbnails  folder name
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // All moview query
-    
       if (isset( $_GET['signal_id'])) {
                     $id = $_GET['signal_id'];
                     $sql_signal = "SELECT * FROM signals WHERE id='$id'";
@@ -48,7 +47,6 @@ require '../vendor/autoload.php';
                               exit();
                             }
                         
-                          
                       } else {
                         $signal_type= $row_signal[0]['signal_type'];
                       }    
@@ -62,26 +60,12 @@ require '../vendor/autoload.php';
                       } else {
                         $stop_loss_price = $row_signal[0]['stop_loss_price'];
                       }
-                      if (isset( $_POST['take_profit_price'])) {
-                        $take_profit_price = $_POST['take_profit_price'];
-                      } else {
-                        $take_profit_price = $row_signal[0]['take_profit_price'];
-                      }
-                      if (isset( $_POST['signal_strength'])) {
-                        
-                        if ($_POST['signal_strength']=='high' || $_POST['signal_strength']=='medium' || $_POST['signal_strength']=='low') {
-                          $signal_strength = $_POST['signal_strength'];
-                        } else {
-                          echo "Signal Strength selected should be high, medium or low ";
-                          exit();
-                        }
-                      } else {
-                        $signal_strength = $row_signal[0]['signal_strength'];
-                      }
+                     
+                    
                       if (isset( $_POST['validity_period'])) {
                         $validity_period = $_POST['validity_period'];
                       } else {
-                        $signal_strength = $row_signal[0]['signal_strength'];
+                        $validity_period = $row_signal[0]['validity_period'];
                       }
                       if (isset( $_POST['additional_comments'])) {
                         $additional_comments = $_POST['additional_comments'];
@@ -93,20 +77,33 @@ require '../vendor/autoload.php';
                       } else {
                         $visibility_settings = $row_signal[0]['visibility_settings'];
                       }
-                      if (isset( $_POST['strategy_tag'])) {
-                        $strategy_tag = $_POST['strategy_tag'];
-                      } else {
-                        $strategy_tag = $row_signal[0]['strategy_tag'];
-                      }
-                      if (isset( $_POST['charts_anaylysis'])) {
-                        $charts_anaylysis = $_POST['charts_anaylysis'];
-                      } else {
-                        $charts_anaylysis = $row_signal[0]['charts_anaylysis'];
-                      }
+                    
                      
                       $updated_at = date("Y-m-d h:i:sa");
+                      if (isset($_FILES['signal_image']['name'])) {
 
-                      $sql = "UPDATE signals SET coin_name='$coin_name', risk_level='$risk_level', signal_type='$signal_type',target_price='$target_price',stop_loss_price='$stop_loss_price',take_profit_price='$take_profit_price',signal_strength='$signal_strength',validity_period='$validity_period',additional_comments='$additional_comments',visibility_settings='$visibility_settings',strategy_tag='$strategy_tag',charts_anaylysis='$charts_anaylysis', updated_at='$updated_at' WHERE id= '$id'";
+                        $path=$row_signal[0]['image'];
+                        if($path!=null){
+                            if(file_exists($path)){
+                                unlink($path);
+
+                            }else{
+                                echo "file does not exists<br>";
+                            }
+                        }
+
+                        $filename = $_FILES["signal_image"]["name"];
+                        $tempname = $_FILES["signal_image"]["tmp_name"];  
+                        $folder = "images/".$filename;  
+                        if (move_uploaded_file($tempname, $folder)) {
+                          echo "File uploaded successfully";
+                        }else{
+                          echo "File could not uploaded";
+                        }
+                      }else{
+                        $folder = $row_signal[0]['image'];
+                      }
+                      $sql = "UPDATE signals SET coin_name='$coin_name',image='$folder', risk_level='$risk_level', signal_type='$signal_type',target_price='$target_price',stop_loss_price='$stop_loss_price',signal_strength='$signal_strength',validity_period='$validity_period',additional_comments='$additional_comments',visibility='$visibility_settings', updated_at='$updated_at' WHERE id= '$id'";
                     
                       if ($conn->query($sql) === TRUE) {
                             $admin_id = $row_signal[0]['admin_id'];

@@ -47,18 +47,6 @@ require '../vendor/autoload.php';
     }
 
 
-    if (isset($_POST['address'])) {
-        $address = $_POST['address'];
-      } else {
-        $contact=$row_all[0]['address']; 
-        exit();
-      }
-    //   $thumbnail = $_POST['thumbnail'];
-    if (isset($_POST['role'])) {
-      $role = $_POST['role'];
-    } else {
-        $contact=$row_all[0]['role'];
-    }
     if (isset($_POST['channel_name'])) {
       $channel_name = $_POST['channel_name'];
     } else {
@@ -94,7 +82,8 @@ require '../vendor/autoload.php';
           $exp_filename = explode('/',$folder);
           $file=$exp_filename[1];
           $filename = $file;
-          $sql = "UPDATE admins SET name='$name',email='$email',contact='$contact',address='$address',password='$password',photo='$folder',role='$role' WHERE id='$id'";
+          $updated_at = date("Y-m-d h:i:sa");
+          $sql = "UPDATE admins SET name='$name',email='$email',contact='$contact',password='$password',photo='$folder',updated_at='$updated_at' WHERE id='$id'";
             
           if ($conn->query($sql) === TRUE) {
             echo "Record updated successfully";

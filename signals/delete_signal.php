@@ -11,6 +11,15 @@ require "../connection.php";
           $row = $result->fetch_all(MYSQLI_ASSOC);
           if ($result->num_rows > 0) {
             // delete reocrd
+            $path=$row[0]['image'];
+            if($path!=null){
+                            if(file_exists($path)){
+                                unlink($path);
+
+                            }else{
+                                echo "file does not exists<br>";
+                            }
+            }
 
             $sql = "DELETE FROM signals WHERE id='$id'";
           

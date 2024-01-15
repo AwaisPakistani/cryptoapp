@@ -4,9 +4,16 @@ require "../connection.php";
     die("Connection failed: " . $conn->connect_error);
   }
   // thumbnails  folder name
-  if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           //$currentdatatime = date("Y/m/d");
-          $sql = "SELECT * FROM signals";
+          if(isset($_POST['channel'])){
+              $channel = $_POST['channel'];
+          }
+          else{
+            echo "please choose name";
+            exit();
+          }
+          $sql = "SELECT * FROM signals WHERE channel_name='$channel'";
           $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 // output data of each row
@@ -18,7 +25,7 @@ require "../connection.php";
             echo json_encode($result);
             $conn->close();
   }else{
-    echo "Method is not get";
+    echo "Method is not post";
   }
  
 ?>

@@ -22,7 +22,6 @@ require '../vendor/autoload.php';
       echo "channel_name required ";
       exit();
     }
-    
     if (isset($_POST['email'])) {
       $email = $_POST['email'];
       $emailexist_query = "SELECT * FROM admins WHERE email='$email'";
@@ -32,7 +31,7 @@ require '../vendor/autoload.php';
         exit();
       }
       else{ 
-                      // Create the Transport
+            // Create the Transport
             $transport = (new Swift_SmtpTransport('invofy.store', 465, 'ssl'))
             ->setUsername('info@invofy.store')
             ->setPassword('invofy@store');
@@ -77,13 +76,6 @@ require '../vendor/autoload.php';
       echo "contact is required ";
       exit();
     }
-
-    if (isset($_POST['address'])) {
-        $address = $_POST['address'];
-      } else {
-        echo "address is required ";
-        exit();
-      }
    
     if (isset($_FILES["photo"]["name"])) {
       // Image
@@ -94,18 +86,6 @@ require '../vendor/autoload.php';
       exit();
     }
    
-    
-    //   $thumbnail = $_POST['thumbnail'];
-    
-    if (isset($_POST['role'])) {
-      $role = $_POST['role'];
-    } else {
-      echo "role is required ";
-      exit();
-    }
-    
-    
-    
     
     //$remember_token = mt_rand(100000, 999999);
 
@@ -124,8 +104,8 @@ require '../vendor/autoload.php';
                 // output data of each row
                 if (move_uploaded_file($tempname, $folder)) {
   
-                  $sql = "INSERT INTO admins (name,email, email_verified_at, password, photo, contact, address, role,channel_name, remember_token, created_at, updated_at)
-                  VALUES ('$name','$email','', '$password', '$folder','$contact','$address','$role','$channel_name','','$created_at','$updated_at')";
+                  $sql = "INSERT INTO admins (name,email, email_verified_at, password, photo, contact,channel_name, remember_token, created_at, updated_at)
+                  VALUES ('$name','$email','', '$password', '$folder','$contact','$channel_name','','$created_at','$updated_at')";
                   
                   if ($conn->query($sql) === TRUE) {
                     echo "Admin created successfully";
@@ -143,10 +123,6 @@ require '../vendor/autoload.php';
     //             $result = array("status" => "0", "message" => "Category not found");
     //             echo json_encode($result);
     // }
-   
-    
-  
-    
     $conn->close();
   }else{
     echo "Method is not post";

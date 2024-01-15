@@ -18,6 +18,7 @@ require '../vendor/autoload.php';
                     $row_user = $result_user->fetch_all(MYSQLI_ASSOC);
                   
                     $channel_name= $row_user[0]['channel_name'];
+                    $admin_name= $row_user[0]['admin_name'];
                     // for fetching channel name end
                 if ($result_user->num_rows > 0) {
                     // output data of each row
@@ -48,9 +49,7 @@ require '../vendor/autoload.php';
                             } else {
                               echo "Signal Type selected should be long or small ";
                               exit();
-                            }
-                        
-                          
+                            } 
                       } else {
                         echo "signal type is required ";
                         exit();
@@ -61,6 +60,7 @@ require '../vendor/autoload.php';
                         echo "Target Price required ";
                         exit();
                       }
+                      
                       if (isset( $_POST['stop_loss_price'])) {
                         $stop_loss_price = $_POST['stop_loss_price'];
                       } else {
@@ -112,8 +112,22 @@ require '../vendor/autoload.php';
                   
                       $updated_at = date("Y-m-d h:i:sa");
 
-                      $sql = "INSERT INTO signals (admin_id,coin_name, risk_level, signal_type,channel_name,target_price,stop_loss_price,take_profit_price,signal_strength,validity_period,additional_comments,visibility_settings,strategy_tag,charts_anaylysis,created_at, updated_at)
-                      VALUES ('$admin_id','$coin_name','$risk_level', '$signal_type','$channel_name','$target_price','$stop_loss_price','$take_profit_price','$signal_strength','$validity_period','$additional_comments','$visibility_settings','$strategy_tag','$charts_anaylysis','$created_at','$updated_at')";
+                      if (isset($_FILES['signal_image']['name'])) {
+                        $filename = $_FILES["signal_image"]["name"];
+                        $tempname = $_FILES["signal_image"]["tmp_name"];  
+                        $folder = "images/".$filename;  
+                        if (move_uploaded_file($tempname, $folder)) {
+                          echo "File uploaded successfully";
+                        }else{
+                          echo "File could not uploaded";
+                        }
+                      } else {
+                        $folder ='';
+                      }
+                      
+
+                      $sql = "INSERT INTO signals (admin_id,admin_name,coin_name,image, risk_level, signal_type,channel_name,target_price,stop_loss_price,validity_period,additional_comments,visibility,created_at, updated_at)
+                      VALUES ('$admin_id','$admin_name','$coin_name','$folder','$risk_level', '$signal_type','$channel_name','$target_price','$stop_loss_price','$validity_period','$additional_comments','$visibility_settings','$created_at','$updated_at')";
                       
                       if ($conn->query($sql) === TRUE) {
                            
