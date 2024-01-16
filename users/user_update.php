@@ -65,7 +65,7 @@ require '../vendor/autoload.php';
         $folder = "profiles/".$filename;  
         if (move_uploaded_file($tempname, $folder)) {
             $updated_at = $row_all[0]['updated_at'];
-            $sql = "UPDATE users SET name='$name',email='$email',phone='$phone',address='$address',password='$password',profile_picture='$folder' WHERE id='$id'";
+            $sql = "UPDATE users SET name='$name',email='$email',phone='$phone',password='$password',profile_picture='$folder' WHERE id='$id'";
             
             if ($conn->query($sql) === TRUE) {
               echo "User updated successfully";

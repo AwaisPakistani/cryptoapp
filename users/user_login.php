@@ -5,8 +5,19 @@ require "../connection.php";
   }
   // thumbnails  folder name
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-          $email = $_POST['email'];
-          $password = $_POST['password'];
+         
+          if (isset($_POST['email'])) {
+            $email = $_POST['email'];
+          } else {
+            echo "Please enter email";
+            exit();
+          }
+          if (isset($_POST['password'])) {
+            $password = $_POST['password'];
+          } else {
+            echo "Please enter password";
+            exit();
+          }
           //$currentdatatime = date("Y/m/d");
          
           $sql = "SELECT * FROM users WHERE email= '$email'";

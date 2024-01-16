@@ -57,13 +57,21 @@ require '../vendor/autoload.php';
     $updated_at = date("Y-m-d h:i:sa");
     
     if (isset($_FILES["photo"]["name"])) {
+        $path=$row_all[0]['photo'];
+        if($path!=null){
+            if(file_exists($path)){
+                unlink($path);
+            }else{
+                echo "file does not exists<br>";
+            }
+        }
         // Image
         $filename = $_FILES["photo"]["name"];
         $tempname = $_FILES["photo"]["tmp_name"];  
         $folder = "thumbnails/".$filename;  
         if (move_uploaded_file($tempname, $folder)) {
             $updated_at = $row_all[0]['updated_at'];
-            $sql = "UPDATE admins SET name='$name',email='$email',contact='$contact',address='$address',password='$password',photo='$folder',role='$role' WHERE id='$id'";
+            $sql = "UPDATE admins SET name='$name',email='$email',contact='$contact',password='$password',photo='$folder' WHERE id='$id'";
             
             if ($conn->query($sql) === TRUE) {
               echo "Record updated successfully";

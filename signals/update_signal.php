@@ -103,7 +103,7 @@ require '../vendor/autoload.php';
                       }else{
                         $folder = $row_signal[0]['image'];
                       }
-                      $sql = "UPDATE signals SET coin_name='$coin_name',image='$folder', risk_level='$risk_level', signal_type='$signal_type',target_price='$target_price',stop_loss_price='$stop_loss_price',signal_strength='$signal_strength',validity_period='$validity_period',additional_comments='$additional_comments',visibility='$visibility_settings', updated_at='$updated_at' WHERE id= '$id'";
+                      $sql = "UPDATE signals SET coin_name='$coin_name',image='$folder', risk_level='$risk_level', signal_type='$signal_type',target_price='$target_price',stop_loss_price='$stop_loss_price',validity_period='$validity_period',additional_comments='$additional_comments',visibility='$visibility_settings', updated_at='$updated_at' WHERE id= '$id'";
                     
                       if ($conn->query($sql) === TRUE) {
                             $admin_id = $row_signal[0]['admin_id'];

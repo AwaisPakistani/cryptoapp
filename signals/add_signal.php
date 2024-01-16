@@ -18,7 +18,7 @@ require '../vendor/autoload.php';
                     $row_user = $result_user->fetch_all(MYSQLI_ASSOC);
                   
                     $channel_name= $row_user[0]['channel_name'];
-                    $admin_name= $row_user[0]['admin_name'];
+                    $admin_name= $row_user[0]['name'];
                     // for fetching channel name end
                 if ($result_user->num_rows > 0) {
                     // output data of each row
@@ -66,11 +66,7 @@ require '../vendor/autoload.php';
                       } else {
                         $stop_loss_price = '';
                       }
-                      if (isset( $_POST['take_profit_price'])) {
-                        $take_profit_price = $_POST['take_profit_price'];
-                      } else {
-                        $take_profit_price = '';
-                      }
+                    
                       if (isset( $_POST['signal_strength'])) {
                         
                         if ($_POST['signal_strength']=='high' || $_POST['signal_strength']=='medium' || $_POST['signal_strength']=='low') {
@@ -92,11 +88,21 @@ require '../vendor/autoload.php';
                       } else {
                         $additional_comments = '';
                       } // strategy_tag
+                      
+
                       if (isset( $_POST['visibility_settings'])) {
-                        $visibility_settings = $_POST['visibility_settings'];
+                        
+                        if ($_POST['visibility_settings']=='true' || $_POST['visibility_settings']=='false') {
+                          $visibility_settings = $_POST['visibility_settings'];
+                        } else {
+                          echo "Visibility selected should be just true or false ";
+                          exit();
+                        }
                       } else {
-                        $visibility_settings = '';
+                        echo "Visibility required ";
+                        exit();
                       }
+
                       if (isset( $_POST['strategy_tag'])) {
                         $strategy_tag = $_POST['strategy_tag'];
                       } else {

@@ -9,6 +9,10 @@ require '../vendor/autoload.php';
           if (isset($_POST['email'])) {
             $email = $_POST['email'];
             $emailexist_query = "SELECT * FROM users WHERE email='$email'";
+             // To get admin name
+             $result_name = $conn->query($emailexist_query);
+             $row_name = $result_name->fetch_all(MYSQLI_ASSOC); 
+             // end to get admin name functionality
             $emailexistance = $conn->query($emailexist_query);
             if ($emailexistance->num_rows > 0) {
                $name = 'Awais'; 

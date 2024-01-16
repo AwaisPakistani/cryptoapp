@@ -70,21 +70,7 @@ require '../vendor/autoload.php';
       echo "phone is required ";
       exit();
     }
-    if (isset($_POST['notification_preferences'])) {
-        $notification_preferences = $_POST['notification_preferences'];
-    } else {
-        $notification_preferences = '';
-    }
-    if (isset($_POST['linked_bank_account'])) {
-        $linked_bank_account = $_POST['linked_bank_account'];
-    } else {
-        $linked_bank_account = '';
-    }
-    if (isset($_POST['portfolio_overview'])) {
-        $portfolio_overview = $_POST['portfolio_overview'];
-    } else {
-        $portfolio_overview = '';
-    }
+   
     // portfolio_overview
    
      
@@ -101,8 +87,6 @@ require '../vendor/autoload.php';
    
     //   $thumbnail = $_POST['thumbnail'];
     
-    
-    $account_balance = 0;
 
     //$remember_token = mt_rand(100000, 999999);
 
@@ -121,8 +105,8 @@ require '../vendor/autoload.php';
                 // output data of each row
                 if (move_uploaded_file($tempname, $folder)) {
   
-                  $sql = "INSERT INTO users (name,email, email_verified_at,email_verified_status, password, profile_picture, phone ,notification_preferences, portfolio_overview,verify_token, created_at, updated_at)
-                  VALUES ('$name','$email','','0', '$password', '$folder','$phone','$notification_preferences','$portfolio_overview','$verify_token','$created_at','$updated_at')";
+                  $sql = "INSERT INTO users (name,email, email_verified_at,email_verified_status, password, profile_picture, phone,verify_token, created_at, updated_at)
+                  VALUES ('$name','$email','','0', '$password', '$folder','$phone','$verify_token','$created_at','$updated_at')";
                   
                   if ($conn->query($sql) === TRUE) {
                     echo "User created successfully";

@@ -22,8 +22,10 @@ require '../vendor/autoload.php';
       echo "channel_name required ";
       exit();
     }
+    $verify_token = mt_rand(1000000,1999999);
     if (isset($_POST['email'])) {
-      $email = $_POST['email'];
+
+        $email = $_POST['email'];
       $emailexist_query = "SELECT * FROM admins WHERE email='$email'";
       $emailexistance = $conn->query($emailexist_query);
       if ($emailexistance->num_rows > 0) {
@@ -43,7 +45,7 @@ require '../vendor/autoload.php';
             $message = (new Swift_Message('Crypto Registration      `                                                                                                                                                                                                                                                                                                                             '))
             ->setFrom(['info@invofy.store' =>$name ])
             ->setTo([$email => 'Recipient Name'])
-            ->setBody('You have registered successfully!</b>', 'text/html')
+            ->setBody('You have registered successfully!</b>And your verify email token is '.$verify_token.' .Copy and paste it to verify your email. Thanks', 'text/html')
             ->addPart('This is the plain text version for non-HTML mail clients', 'text/plain');
 
             // Send the message
@@ -89,11 +91,13 @@ require '../vendor/autoload.php';
     
     //$remember_token = mt_rand(100000, 999999);
 
+
+
     $created_at = date("Y-m-d h:i:sa");
    
 
     $updated_at = date("Y-m-d h:i:sa");
-   
+    
     
     $folder = "thumbnails/".$filename;  
 
@@ -104,8 +108,8 @@ require '../vendor/autoload.php';
                 // output data of each row
                 if (move_uploaded_file($tempname, $folder)) {
   
-                  $sql = "INSERT INTO admins (name,email, email_verified_at, password, photo, contact,channel_name, remember_token, created_at, updated_at)
-                  VALUES ('$name','$email','', '$password', '$folder','$contact','$channel_name','','$created_at','$updated_at')";
+                  $sql = "INSERT INTO admins (name,email, email_verified_at,email_verified_status, password, photo, contact,channel_name, remember_token,verify_token, created_at, updated_at)
+                  VALUES ('$name','$email','','0', '$password', '$folder','$contact','$channel_name','','$verify_token','$created_at','$updated_at')";
                   
                   if ($conn->query($sql) === TRUE) {
                     echo "Admin created successfully";

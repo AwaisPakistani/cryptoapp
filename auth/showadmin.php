@@ -6,7 +6,8 @@ require "../connection.php";
   // thumbnails  folder name
   if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           //$currentdatatime = date("Y/m/d");
-          $sql = "SELECT id,name,email,email_verified_at,photo,contact,channel_name,created_at,updated_at FROM admins";
+          $id = $_GET['id'];
+          $sql = "SELECT * FROM admins WHERE id='$id'";
           $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 // output data of each row
