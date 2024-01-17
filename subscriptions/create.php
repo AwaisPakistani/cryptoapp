@@ -59,7 +59,7 @@ require '../vendor/autoload.php';
     VALUES ('$email','$created_at','$updated_at')";
                   
     if ($conn->query($sql) === TRUE) {
-                    echo "You have subscribed successfully";
+                    echo "<br>You have subscribed successfully";
     } else {
                     echo "Error: " . $sql . "<br>" . $conn->error;
     }

@@ -138,7 +138,7 @@ require '../vendor/autoload.php';
                             $mailer = new Swift_Mailer($transport);
 
                             // Create a message
-                            $message = (new Swift_Message('Crypto Signal UPdation      `                                                                                                                                                                                                                                                                                                                             '))
+                            $message = (new Swift_Message('Crypto Accomodites UPdation      `                                                                                                                                                                                                                                                                                                                             '))
                             ->setFrom(['info@invofy.store' =>$name ])
                             ->setTo([$email => 'Recipient Name'])
                             ->setBody('Dear '.$name.',<br/> your Accomodition has updated successfully', 'text/html')
@@ -164,7 +164,7 @@ require '../vendor/autoload.php';
                     $result = array("status" => "0", "message" => "Accomodity not found");
                 }
       } else {
-        echo "Stock id is required ";
+        echo "Accomodity id is required ";
         exit();
       }
   }else{

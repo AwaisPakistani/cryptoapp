@@ -138,7 +138,7 @@ require '../vendor/autoload.php';
                             $mailer = new Swift_Mailer($transport);
 
                             // Create a message
-                            $message = (new Swift_Message('Crypto Signal UPdation      `                                                                                                                                                                                                                                                                                                                             '))
+                            $message = (new Swift_Message('Crypto Stock UPdation      `                                                                                                                                                                                                                                                                                                                             '))
                             ->setFrom(['info@invofy.store' =>$name ])
                             ->setTo([$email => 'Recipient Name'])
                             ->setBody('Dear '.$name.',<br/> your Stock has updated successfully', 'text/html')
@@ -152,7 +152,7 @@ require '../vendor/autoload.php';
                               $result = array("status" => "1", "message" => "Message has been sent and Your Stock updated successfully");
                             } else {
                             // echo 'Message could not be sent';
-                              $result = array("status" => "1", "message" => "Message could not be sent but Your Stock created successfully");
+                              $result = array("status" => "1", "message" => "Message could not be sent but Your Stock updated successfully");
                             }
                         
                       } else {

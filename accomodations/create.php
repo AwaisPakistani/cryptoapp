@@ -171,10 +171,10 @@ require '../vendor/autoload.php';
 
                             if ($result) {
                             // echo 'Message has been sent';
-                              $result = array("status" => "1", "message" => "Message has been sent and Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message has been sent and Your Accomodity created successfully");
                             } else {
                             // echo 'Message could not be sent';
-                              $result = array("status" => "1", "message" => "Message could not be sent but Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message could not be sent but Your Accomodity created successfully");
                             }
                         
                       } else {

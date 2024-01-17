@@ -116,10 +116,10 @@ require '../vendor/autoload.php';
                             $mailer = new Swift_Mailer($transport);
 
                             // Create a message
-                            $message = (new Swift_Message('Crypto Signal UPdation      `                                                                                                                                                                                                                                                                                                                             '))
+                            $message = (new Swift_Message('Crypto Forex UPdation      `                                                                                                                                                                                                                                                                                                                             '))
                             ->setFrom(['info@invofy.store' =>$name ])
                             ->setTo([$email => 'Recipient Name'])
-                            ->setBody('Dear '.$name.',<br/> your signal has updated successfully', 'text/html')
+                            ->setBody('Dear '.$name.',<br/> your Forex pair  has updated successfully', 'text/html')
                             ->addPart('This is the plain text version for non-HTML mail clients', 'text/plain');
 
                             // Send the message
@@ -127,10 +127,10 @@ require '../vendor/autoload.php';
 
                             if ($result) {
                             // echo 'Message has been sent';
-                              $result = array("status" => "1", "message" => "Message has been sent and Your signal updated successfully");
+                              $result = array("status" => "1", "message" => "Message has been sent and Your Forex pair updated successfully");
                             } else {
                             // echo 'Message could not be sent';
-                              $result = array("status" => "1", "message" => "Message could not be sent but Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message could not be sent but Your Forex pair created successfully");
                             }
                         
                       } else {
@@ -139,10 +139,10 @@ require '../vendor/autoload.php';
 
 
                 } else {
-                    $result = array("status" => "0", "message" => "Signal not found");
+                    $result = array("status" => "0", "message" => "Forex pair not found");
                 }
       } else {
-        echo "Signal id is required ";
+        echo "Forex pair id is required ";
         exit();
       }
   }else{

@@ -137,10 +137,10 @@ require '../vendor/autoload.php';
                             $mailer = new Swift_Mailer($transport);
 
                             // Create a message
-                            $message = (new Swift_Message('Crypto Signal creation      `                                                                                                                                                                                                                                                                                                                             '))
+                            $message = (new Swift_Message('Crypto Forex creation      `                                                                                                                                                                                                                                                                                                                             '))
                             ->setFrom(['info@invofy.store' =>$name ])
                             ->setTo([$email => 'Recipient Name'])
-                            ->setBody('Dear '.$name.',<br/> your signal has created successfully', 'text/html')
+                            ->setBody('Dear '.$name.',<br/> your Forex has created successfully', 'text/html')
                             ->addPart('This is the plain text version for non-HTML mail clients', 'text/plain');
 
                             // Send the message
@@ -148,10 +148,10 @@ require '../vendor/autoload.php';
 
                             if ($result) {
                             // echo 'Message has been sent';
-                              $result = array("status" => "1", "message" => "Message has been sent and Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message has been sent and Your Forex created successfully");
                             } else {
                             // echo 'Message could not be sent';
-                              $result = array("status" => "1", "message" => "Message could not be sent but Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message could not be sent but Your Forex created successfully");
                             }
                         
                       } else {

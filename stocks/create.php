@@ -160,7 +160,7 @@ require '../vendor/autoload.php';
                             $mailer = new Swift_Mailer($transport);
 
                             // Create a message
-                            $message = (new Swift_Message('Crypto Signal creation      `                                                                                                                                                                                                                                                                                                                             '))
+                            $message = (new Swift_Message('Crypto Stock creation      `                                                                                                                                                                                                                                                                                                                             '))
                             ->setFrom(['info@invofy.store' =>$name ])
                             ->setTo([$email => 'Recipient Name'])
                             ->setBody('Dear '.$name.',<br/> your stock has created successfully', 'text/html')
@@ -171,10 +171,10 @@ require '../vendor/autoload.php';
 
                             if ($result) {
                             // echo 'Message has been sent';
-                              $result = array("status" => "1", "message" => "Message has been sent and Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message has been sent and Your stock created successfully");
                             } else {
                             // echo 'Message could not be sent';
-                              $result = array("status" => "1", "message" => "Message could not be sent but Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message could not be sent but Your stock created successfully");
                             }
                         
                       } else {
