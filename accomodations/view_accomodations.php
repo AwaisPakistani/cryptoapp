@@ -6,7 +6,7 @@ require "../connection.php";
   // thumbnails  folder name
   if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           //$currentdatatime = date("Y/m/d");
-          $sql = "SELECT * FROM stocks";
+          $sql = "SELECT * FROM accomodities";
           $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 // output data of each row

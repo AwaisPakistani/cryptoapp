@@ -8,33 +8,24 @@ require '../vendor/autoload.php';
   }
   // thumbnails  folder name
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // All moview query 
-    
-      if (isset( $_GET['admin_id'])) {
-                    $id = $_GET['admin_id'];
-                    $sql_user = "SELECT id,name,channel_name FROM admins WHERE id='$id'";
-                    $result_user = $conn->query($sql_user);
+    // All moview query
+      if (isset( $_GET['accom_id'])) {
+                    $id = $_GET['accom_id'];
+                    $sql_accom = "SELECT * FROM accomodities WHERE id='$id'";
+                    $result_accom = $conn->query($sql_accom);
                     // for fetching channel name
-                    $row_user = $result_user->fetch_all(MYSQLI_ASSOC);
+                    $row_accom = $result_accom->fetch_all(MYSQLI_ASSOC);
                   
-                    $channel_name= $row_user[0]['channel_name'];
-                    $admin_name= $row_user[0]['name'];
-                    // for fetching channel name end
-                if ($result_user->num_rows > 0) {
-                    // output data of each row
-                    // $row = $result->fetch_all(MYSQLI_ASSOC);
-                    $admin_id = $_GET['admin_id'];
+                if ($result_accom->num_rows > 0) {
                      if (isset( $_POST['asset'])) {
                         $asset = $_POST['asset'];
                       } else {
-                        echo "asset required ";
-                        exit();
+                        $asset= $row_accom[0]['asset'];
                       }
                       if (isset( $_POST['company_name'])) {
                         $company_name = $_POST['company_name'];
                       } else {
-                        echo "Company name required ";
-                        exit();
+                        $company_name= $row_accom[0]['company_name'];
                       }
                       if (isset( $_POST['risk_level'])) {
                         
@@ -45,8 +36,7 @@ require '../vendor/autoload.php';
                           exit();
                         }
                       } else {
-                        echo "risk level required ";
-                        exit();
+                        $risk_level= $row_accom[0]['risk_level'];
                       }
                          
                       if (isset($_POST['signal_type'])) {  
@@ -55,79 +45,65 @@ require '../vendor/autoload.php';
                             } else {
                               echo "Signal Type selected should be long or small ";
                               exit();
-                            } 
+                            }
+                        
                       } else {
-                        echo "signal type is required ";
-                        exit();
+                        $signal_type= $row_accom[0]['signal_type'];
                       }    
                       if (isset( $_POST['target_price'])) {
                         $target_price = $_POST['target_price'];
                       } else {
-                        echo "Target Price required ";
-                        exit();
+                        $target_price= $row_accom[0]['target_price'];
                       }
-                      
                       if (isset( $_POST['stop_loss_price'])) {
                         $stop_loss_price = $_POST['stop_loss_price'];
                       } else {
-                        $stop_loss_price = '';
+                        $stop_loss_price = $row_accom[0]['stop_loss_price'];
                       }
+                     
+                      if (isset( $_POST['additional_comments'])) {
+                        $additional_comments = $_POST['additional_comments'];
+                      } else {
+                        $additional_comments = $row_accom[0]['additional_comments'];
+                      } // strategy_tag
+                      if (isset( $_POST['visibility_settings'])) {
+                        $visibility_settings = $_POST['visibility_settings'];
+                      } else {
+                        $visibility_settings = $row_accom[0]['visibility_settings'];
+                      }
+
                       if (isset( $_POST['change_percent'])) {
                         $change_percent = $_POST['change_percent'];
                       } else {
-                        $change_percent = '';
+                        $change_percent = $row_accom[0]['change_percent'];
                       }
 
                       if (isset( $_POST['volume'])) {
                         $volume = $_POST['volume'];
                       } else {
-                        $volume = '';
+                        $volume = $row_accom[0]['volume'];
                       }
 
                       if (isset( $_POST['market_cap'])) {
                         $market_cap = $_POST['market_cap'];
                       } else {
-                        $market_cap = '';
+                        $market_cap = $row_accom[0]['market_cap'];
                       }
                     
-                      if (isset( $_POST['signal_strength'])) {
-                        
-                        if ($_POST['signal_strength']=='high' || $_POST['signal_strength']=='medium' || $_POST['signal_strength']=='low') {
-                          $signal_strength = $_POST['signal_strength'];
-                        } else {
-                          echo "Signal Strength selected should be high, medium or low ";
-                          exit();
-                        }
-                      } else {
-                        $signal_strength = '';
-                      }
-                      
-                      if (isset( $_POST['additional_comments'])) {
-                        $additional_comments = $_POST['additional_comments'];
-                      } else {
-                        $additional_comments = '';
-                      } // strategy_tag
-                      
-
-                      if (isset( $_POST['visibility_settings'])) {
-                        
-                        if ($_POST['visibility_settings']=='true' || $_POST['visibility_settings']=='false') {
-                          $visibility_settings = $_POST['visibility_settings'];
-                        } else {
-                          echo "Visibility selected should be just true or false ";
-                          exit();
-                        }
-                      } else {
-                        echo "Visibility required ";
-                        exit();
-                      }
-
-                      $created_at = date("Y-m-d h:i:sa");
                      
-                  
                       $updated_at = date("Y-m-d h:i:sa");
-
                       if (isset($_FILES['accom_image']['name'])) {
+
+                        $path=$row_accom[0]['image'];
+                        if($path!=null){
+                            if(file_exists($path)){
+                                unlink($path);
+
+                            }else{
+                                echo "file does not exists<br>";
+                            }
+                        }
+
                         $filename = $_FILES["accom_image"]["name"];
                         $tempname = $_FILES["accom_image"]["tmp_name"];  
                         $folder = "accom_images/".$filename;  
@@ -136,17 +112,19 @@ require '../vendor/autoload.php';
                         }else{
                           echo "File could not uploaded";
                         }
-                      } else {
-                        $folder ='';
+                      }else{
+                        $folder = $row_accom[0]['image'];
                       }
-                      
-
-                      $sql = "INSERT INTO accomodities (admin_id,admin_name,asset,image, risk_level, signal_type,channel_name,company_name,target_price,stop_loss_price,additional_comments,visibility,change_percent,volume,market_cap,created_at, updated_at)
-                      VALUES ('$admin_id','$admin_name','$asset','$folder','$risk_level', '$signal_type','$channel_name','$company_name','$target_price','$stop_loss_price','$additional_comments','$visibility_settings','$change_percent','$volume','$market_cap','$created_at','$updated_at')";
-                      
+                      $sql = "UPDATE accomodities SET asset='$asset',company_name='$company_name',image='$folder', risk_level='$risk_level', signal_type='$signal_type',target_price='$target_price',stop_loss_price='$stop_loss_price',additional_comments='$additional_comments',visibility='$visibility_settings', 
+                      change_percent='$change_percent', 
+                      volume='$volume', 
+                      market_cap='$market_cap', 
+                      updated_at='$updated_at' WHERE id= '$id'";
+                    
                       if ($conn->query($sql) === TRUE) {
-                           
-                            $sql_all = "SELECT * FROM admins WHERE id='$id'";
+                            $admin_id = $row_accom[0]['admin_id'];
+
+                            $sql_all = "SELECT * FROM admins WHERE id='$admin_id'";
                             $result_all = $conn->query($sql_all);
                             $row_all = $result_all->fetch_all(MYSQLI_ASSOC); 
                             $name = $row_all[0]['name'];
@@ -160,10 +138,10 @@ require '../vendor/autoload.php';
                             $mailer = new Swift_Mailer($transport);
 
                             // Create a message
-                            $message = (new Swift_Message('Crypto Accomodation creation      `                                                                                                                                                                                                                                                                                                                             '))
+                            $message = (new Swift_Message('Crypto Signal UPdation      `                                                                                                                                                                                                                                                                                                                             '))
                             ->setFrom(['info@invofy.store' =>$name ])
                             ->setTo([$email => 'Recipient Name'])
-                            ->setBody('Dear '.$name.',<br/> your Accomodation has created successfully', 'text/html')
+                            ->setBody('Dear '.$name.',<br/> your Accomodition has updated successfully', 'text/html')
                             ->addPart('This is the plain text version for non-HTML mail clients', 'text/plain');
 
                             // Send the message
@@ -171,10 +149,10 @@ require '../vendor/autoload.php';
 
                             if ($result) {
                             // echo 'Message has been sent';
-                              $result = array("status" => "1", "message" => "Message has been sent and Your signal created successfully");
+                              $result = array("status" => "1", "message" => "<br>Message has been sent and Your Accomodity updated successfully");
                             } else {
                             // echo 'Message could not be sent';
-                              $result = array("status" => "1", "message" => "Message could not be sent but Your signal created successfully");
+                              $result = array("status" => "1", "message" => "Message could not be sent but Your Accomodity created successfully");
                             }
                         
                       } else {
@@ -183,13 +161,12 @@ require '../vendor/autoload.php';
 
 
                 } else {
-                    $result = array("status" => "0", "message" => "Admin not found");
+                    $result = array("status" => "0", "message" => "Accomodity not found");
                 }
       } else {
-        echo "Admin id is required ";
+        echo "Stock id is required ";
         exit();
       }
-
   }else{
     $result = array("status" => "0", "message" => "Request is not post");
   }
